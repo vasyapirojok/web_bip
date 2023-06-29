@@ -1,0 +1,407 @@
+
+                <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Dynamic Pagination</title>
+    <style>
+    *{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			margin: 50px;
+		}
+		main{
+			widows: 70%;
+			height: auto;
+			padding: 20px;
+			margin: 50px auto;
+			background: whitesmoke;
+			font-family: system-ui;
+			color: #666;
+		}
+		.header{
+			width: 90%;
+			height: 100px;
+			margin: auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.items-controller,
+		.search{
+			flex-shrink: 0;
+			display: flex;
+			align-content: center;
+			align-items: center;
+
+		}
+		select{
+		 	padding: 2px;
+	    	margin: 0 10px;
+	   		outline: none;
+	    	cursor: pointer;
+	    	border: none;
+	    	background: transparent;
+		}
+		.search > input{
+			padding: 8px;
+		    border: none;
+		    outline: navajowhite;
+		    margin: 0 0 0 20px;
+		    background: white;
+		}
+		.field{
+			width: 90%;
+			height: auto;
+			margin: auto;
+		}
+		table{
+			width: 100%;
+			margin: 2px auto;
+			table-layout: auto;
+			color: #757575;
+			background-color: #ffff;
+			border-collapse: collapse;
+			border-spacing: 0;
+			text-align: left;
+		}
+		table tr th, td{
+			padding: 10px;
+			border: 1px solid #ccc;
+		}
+		.bottom-field{
+			width: 100%;
+			padding: 20px;
+			margin-top: 20px;
+		}
+		.pagination{
+	      display: flex;
+	      justify-content: center;
+	      align-items: center;
+	    }
+	    .pagination li{
+	      list-style: none;
+	      padding: 2px;
+	      margin: 10px;
+	      flex-shrink: 0;
+	      text-align: center;
+	      border-radius: 5px;
+	      border: 1px solid #999;
+	      color: #999;
+	    }
+	    .pagination li.active{
+	      background: #32d6aa;
+	      color: white;
+	      border-color: #32d6aa;
+
+	    }
+	    .pagination li a{
+	      text-decoration: none;
+	      padding: 3px 8px;
+	      color: inherit;
+	      display: block;
+	      font-family: sans-serif;
+	      font-size: 13px;
+	    }
+	    i.fa-edit{color: lime;}
+		i.fa-trash{color: red;}
+    </style>
+</head>
+<body onload="script();">
+
+    <main>
+        <section class="header">
+            <div class="items-controller">
+                <span name="" id="itemperpage" hidden="hidden" , value="10">
+				</span>
+                <input type=hidden id="shops_list" name="shops_list_name" value="['5ka', 'magnit-univer']"/>
+            </div>
+            <div class="search">
+                <h5>Search</h5>
+                <input type="text" name="" id="search" placeholder="search">
+            </div>
+        </section>
+        <section class="field">
+            <table border=1>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Photo</th>
+                                <th>Price without discount</th>
+                                <th>Discounted price</th>
+                                <th>Weigth</th>
+                                <th>Discount</th>
+                                <th>Date of production</th>
+                                <th>Expiration date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            <tr>
+<td>Макаронные изделия Barilla, Capellini, 450 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/uqcpz54co5toifg644loiy7nsi.jpg></td>
+<td>89.99</td>
+<td>74.9</td>
+<td>450.0</td>
+<td>17.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Макаронные изделия Barilla, Spaghetti, 450 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/ffan75lwmmeb24pa7iw2cxmsei.jpg></td>
+<td>89.99</td>
+<td>74.9</td>
+<td>450.0</td>
+<td>17.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Нектар манговый, с мякотью, IL Primo, 0,2 л *Цена указана за 1 шт. при покупке 2 шт. одновременно</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/2y24r4vkrr7qc5pzqngf4o2vie.jpg></td>
+<td>85.98</td>
+<td>42.99</td>
+<td>0.2</td>
+<td>50.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Соус Астория, сырный, 20%, 233 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/6e4aq5wi6btl65ihs7du2kpqpq.jpg></td>
+<td>119.99</td>
+<td>69.99</td>
+<td>233.0</td>
+<td>42.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Колбаса Молокуша Вязанка, вареная, Стародворские Колбасы, 450 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/vpftfnvbmbjkymubx7evoccplq.jpg></td>
+<td>249.99</td>
+<td>139.9</td>
+<td>450.0</td>
+<td>45.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Кофе Venetto, сублимированный, с добавлением молотого, 95 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/ctlreuseniyi3hnzdcgijqdstq.jpg></td>
+<td>219.99</td>
+<td>179.9</td>
+<td>95.0</td>
+<td>19.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Свинина Совок, тушеная, высший сорт, 325 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/7czl45qqnzrmhgl7acxfqe3cky.jpg></td>
+<td>252.99</td>
+<td>209.99</td>
+<td>325.0</td>
+<td>17.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Чебупели, сочные с мясом, Горячая штучка, 300 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/zjdhlojsdzkjvxqqmessj3wmmi.jpg></td>
+<td>159.99</td>
+<td>99.99</td>
+<td>300.0</td>
+<td>38.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Соус Астория, чесночный, 20%, 233 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/uz6k25jqvr2ju2envxkcgpv46y.jpg></td>
+<td>119.99</td>
+<td>69.99</td>
+<td>233.0</td>
+<td>42.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+<tr>
+<td>Макаронные изделия Barilla, Girandole, 450 г</td>
+<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/ce7ufr43gazmoz2f6caw7rr73e.jpg></td>
+<td>89.99</td>
+<td>74.9</td>
+<td>450.0</td>
+<td>17.0</td>
+<td>2023-06-27T00:00:00Z</td>
+<td>2023-07-03T00:00:00Z</td>
+</tr>
+   
+                    </tbody>
+			    </table>
+    		    
+            <div class="bottom-field">
+                <ul class="pagination">
+                  <li class="prev"><a href="#" id="prev">&#139;</a></li>
+                    <!-- page number here -->
+                  <li class="next"><a href="#" id="next">&#155;</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    
+
+
+
+<script type="text/javascript">
+		var tbody = document.querySelector("tbody");
+		var pageUl = document.querySelector(".pagination");
+		var itemShow = document.querySelector("#itemperpage");
+		var tr = tbody.querySelectorAll("tr");
+		var emptyBox = [];
+	var index =  2;
+
+            
+            var itemPerPage = 10;
+        //window.location.href = "https://127.0.0.1/get_page" + "?page_number=" + index + "&shops_list=['5ka']";
+		for(let i=0; i<tr.length; i++){ emptyBox.push(tr[i]);}
+
+		itemShow.onchange = giveTrPerPage;
+		function giveTrPerPage(){
+			itemPerPage = Number(this.value);
+			// console.log(itemPerPage);
+			displayPage(itemPerPage);
+			pageGenerator(itemPerPage);
+			getpagElement(itemPerPage);
+		}
+
+		function displayPage(limit){
+			tbody.innerHTML = '';
+			for(let i=0; i<limit; i++){
+				tbody.appendChild(emptyBox[i]);
+			}
+			const  pageNum = pageUl.querySelectorAll('.list');
+			pageNum.forEach(n => n.remove());
+		}
+		displayPage(itemPerPage);
+
+        function clear_pages() {
+            pages = document.querySelectorAll("li")
+            if (pages.length > 2) {
+                for (let i = 1; i < pages.length - 1; ++i) {
+                    pages[i].remove()
+                }
+            }
+        }
+
+		function pageGenerator(getem){
+			const num_of_tr = emptyBox.length;
+			//if(num_of_tr <= getem){
+			//	pageUl.style.display = 'none';
+			//}else{
+                
+				pageUl.style.display = 'flex';
+    const num_Of_Page = 59;
+                clear_pages()
+                
+				for(i=index; (i <= parseInt(index) + 5) && (i < num_Of_Page); i++){
+					const li = document.createElement('li'); li.className = 'list';
+                    if (i == index) {
+						li.classList.add("active");
+					}
+					const a =document.createElement('a'); a.href = '#'; a.innerText = i;
+					a.setAttribute('data-page', i);
+					li.appendChild(a);
+					pageUl.insertBefore(li,pageUl.querySelector('.next'));
+				}
+			//}
+		}
+		pageGenerator(itemPerPage);
+		let pageLink = pageUl.querySelectorAll("a");
+		let lastPage =  pageLink.length - 2;
+		
+		function pageRunner(page, items, lastPage, active){
+			for(button of page){
+				button.onclick = e=>{
+					const page_num = e.target.getAttribute('data-page');
+					const page_mover = e.target.getAttribute('id');
+					if(page_num != null){
+						index = page_num;
+					}else{
+						if(page_mover === "next"){
+							index++;
+							if(index >= lastPage){
+								index = lastPage;
+							}
+						}else{
+							index--;
+							if(index <= 1){
+								index = 1;
+							}
+						}
+                        
+					}
+                    pageGenerator(itemPerPage);
+                    let pageLink_ = pageUl.querySelectorAll("a");
+                    let lastPage_ =  pageLink_.length - 2;
+                    pageLi_ = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+                    pageRunner(pageLink_, itemPerPage, lastPage_, pageLi_);
+                    
+					pageMaker(index, items, active);
+				}
+			}
+
+		}
+		var pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+		pageRunner(pageLink, itemPerPage, lastPage, pageLi);
+
+		function getpagElement(val){
+			let pagelink = pageUl.querySelectorAll("a");
+			let lastpage =  pagelink.length - 2;
+			let pageli = pageUl.querySelectorAll('.list');
+			pageli[0].classList.add("active");
+			pageRunner(pagelink, val, lastpage, pageli);
+			
+		}
+	
+		
+		
+		function pageMaker(index, item_per_page, activePage){
+			var shops_list = document.getElementById('shops_list').value
+			window.location.href = "https://127.0.0.1/get_page" + "?page_number=" + index + "&shops_list=" + shops_list;
+            const start = item_per_page * index;
+			const end  = start + item_per_page;
+			const current_page =  emptyBox.slice((start - item_per_page), (end-item_per_page));
+			tbody.innerHTML = "";
+			for(let j=0; j<current_page.length; j++){
+				let item = current_page[j];					
+				tbody.appendChild(item);
+			}
+
+		}
+
+
+
+
+
+		// search content 
+		var search = document.getElementById("search");
+		search.onkeyup = e=>{
+			const text = e.target.value;
+			for(let i=0; i<tr.length; i++){
+				const matchText = tr[i].querySelectorAll("td")[0].innerText;
+				if(matchText.toLowerCase().indexOf(text.toLowerCase()) > -1){
+					tr[i].style.visibility = "visible";
+				}else{
+					tr[i].style.visibility= "collapse";
+				}
+			}
+		}
+</script>
+</body>
+</html>
+        

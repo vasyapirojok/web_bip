@@ -1,0 +1,173 @@
+<!Doctype Html>
+<Html>
+
+<Head>
+    <Title>
+        Shops list
+    </Title>
+    <style>
+        .dropbtn {
+            background-color: yellow;
+            color: black;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .dropdown {
+            display: inline-block;
+            position: relative
+        }
+
+        .dropdown-content {
+            position: absolute;
+            background-color: lightgrey;
+            min-width: 200px;
+            display: none;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: orange;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: grey;
+        }
+    </style>
+</Head>
+
+<Body>
+    <br>
+    
+    <form>
+        <div id="list1" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Select Fruits</span>
+            <ul class="items">
+                <li><input class="messageCheckBox" type="checkbox" value="5ka" />Пятерочка </li>
+                <li><input class="messageCheckBox" type="checkbox" value="magnit-univer" />Магнит</li>
+                <li><input class="messageCheckBox" type="checkbox" value="amwine" />Amwine </li>
+                <li><input class="messageCheckBox" type="checkbox" value="dixy" />Дикси </li>
+                <li><input class="messageCheckBox" type="checkbox" value="verno" />Верный </li>
+                <li><input class="messageCheckBox" type="checkbox" value="winelab" />Винлаб </li>
+                <li><input class="messageCheckBox" type="checkbox" value="vkusvill_offline" />Вкусвилл</li>
+                <li><input class="messageCheckBox" type="checkbox" value="7shagoff" />Семишагофф </li>
+                <li><input class="messageCheckBox" type="checkbox" value="perekrestok" />Перекресток</li>
+                <li><input class="messageCheckBox" type="checkbox" value="tdreal.spb" />РеалЪ </li>
+                <li><input class="messageCheckBox" type="checkbox" value="norman_1" />Норман </li>
+                <li><input class="messageCheckBox" type="checkbox" value="velikolukskij-myasokombinat" />Великолукский мясокомбинат </li>
+                <li><input class="messageCheckBox" type="checkbox" value="mini-lenta" />Мини Лента </li>
+                <li><input class="messageCheckBox" type="checkbox" value="lenta-giper" />Лента Гипер</li>
+                <li><input class="messageCheckBox" type="checkbox" value="lenta-super" />Лента Супермаркет </li>
+                <li><input class="messageCheckBox" type="checkbox" value="okmarket-giper" />Окей</li>
+                <li><input class="messageCheckBox" type="checkbox" value="eurospar" />Eurospar </li>
+                <li><input class="messageCheckBox" type="checkbox" value="auchan" />Ашан</li>
+                <li><input class="messageCheckBox" type="checkbox" value="esh-derevenskoe" />Ешь Деревенское </li>
+                <li><input class="messageCheckBox" type="checkbox" value="rosal24" />Росал </li>
+                <li><input class="messageCheckBox" type="checkbox" value="glavpivo" />ГлавПиво</li>
+            </ul>
+        </div>
+        <br>
+        <p>
+            Days number:<br>
+            <input name="days_number" id="days_number"/>
+        </p>
+        <p>
+            Total money:<br>
+            <input name="total_money" id="full_price"/>
+        </p>
+
+        <input type="button" value="Get ration" onclick="select_shops()" />
+        <br>
+        <input type="button" value="Get products of selected shops" onclick="shop_info()" />
+    </form>
+
+    <!-- <h1><a href="/get_ration">Ration</a></h1> -->
+
+    <script>
+
+        function select_shops() {
+            // console.log("i entry");
+            var list_of_selected_shop = [];
+            var checkedValue = null;
+            
+            var inputElements = document.getElementsByClassName('messageCheckBox');
+            // var foo = document.querySelector('.messageCheckbox').checked;
+            // console.log(foo);
+            // console.log(inputElements.length);
+            // console.log(inputElements.value);
+            
+            // while (1) {
+            for (var i = 0; inputElements[i]; ++i) {
+                if (inputElements[i].checked) {
+                    list_of_selected_shop.push(inputElements[i].value);
+                }
+            }
+            var shops_list = list_of_selected_shop;
+            var full_price = document.getElementById("full_price").value;
+            var days_number = document.getElementById("days_number").value;
+            // console.log("list_of_shops = " + shops_list);
+            // console.log("days_number = " + days_number);
+            // console.log("full_price = " + full_price);
+            
+
+            fetch("https://127.0.0.1/get_ration",
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    mode: "no-cors",
+                    credentials: "include",
+                    redirect: "follow",
+                    body: JSON.stringify({ "full_price": full_price, "days_number": days_number, "shops_list": shops_list.toString() })
+                })
+                .then(async (response) => {var text = await response.text();document.body.innerHTML = text; document.body.rel})
+                // document.body.innerHTML = response.text.toString
+        }
+        function shop_info() {
+            var list_of_selected_shop = [];
+            var checkedValue = null;
+            
+            var inputElements = document.getElementsByClassName('messageCheckBox');
+            
+            for (var i = 0; inputElements[i]; ++i) {
+                if (inputElements[i].checked) {
+                    list_of_selected_shop.push(inputElements[i].value);
+                }
+            }
+            var shops_list = list_of_selected_shop;
+            var full_price = document.getElementById("full_price").value;
+            var days_number = document.getElementById("days_number").value;
+            window.location.href = "https://127.0.0.1/shop_info" + "?full_price=" + full_price + "&days_number=" + days_number + "&shops_list=" + shops_list.toString();
+            // fetch("https://127.0.0.1/shop_info",
+            //     {
+            //         headers: {
+            //             'Accept': 'application/json',
+            //             'Content-Type': 'application/json'
+            //         },
+            //         method: "POST",
+            //         mode: "no-cors",
+            //         credentials: "include",
+            //         redirect: "follow",
+            //         body: JSON.stringify({ "full_price": full_price, "days_number": days_number, "shops_list": shops_list.toString() })
+            //     })
+            //     .then(async (response) => {var text = await response.text();document.body.innerHTML = text})
+                
+        }
+
+    </script>
+</Body>
+
+</Html>

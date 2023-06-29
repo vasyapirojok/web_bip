@@ -1,0 +1,63 @@
+<html>
+
+<body>
+    <table id="catTable">
+        <thead>
+            <tr>
+                <th data-sort="name">Name</th>
+                <th data-sort="age">Age</th>
+                <th data-sort="breed">Breed</th>
+                <th data-sort="gender">Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4"><i>Loading...</i></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="prevButton">Previous</button>
+    <button id="nextButton">Next</button>
+
+
+    <script>
+        
+        const queryString = window.location.search;
+
+        let resp = fetch('https://www.raymondcamden.com/.netlify/functions/get-cats');
+        let data = resp.json;
+        
+
+        function renderTable() {
+            // create html
+            let result = '';
+            data.forEach(c => {
+                result += `<tr>
+                <td>${c.name}</td>
+                <td>${c.age}</td>
+                <td>${c.breed}</td>
+                <td>${c.gender}</td>
+                </tr>`;
+            });
+            table.innerHTML = result;
+        }
+        const pageSize = 3;
+        let curPage = 1;
+        document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+        document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+
+        function previousPage() {
+            if (curPage > 1) curPage--;
+            renderTable();
+        }
+
+        function nextPage() {
+            if ((curPage * pageSize) < data.length) curPage++;
+            renderTable();
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h2>LOGIN</h2>
+    <form action="login_submit_form" method="post">
+            Authentication Code:<br>
+            <input type="text" placeholder="Authentication Code" value="" name="auth_code" required/>  
+        </p>
+        <input type="submit" value="Login" />
+    </form>
+    <script>
+        function getCookie(cookieName) {
+            let cookie = {};
+            document.cookie.split(';').forEach(function(el) {
+                let [key,value] = el.split('=');
+                cookie[key.trim()] = value;
+            })
+            return cookie[cookieName];
+        }
+   
+    
+    // console.log("Now will be head");
+    
+    // console.log(getCookie('fastapi-csrf-token'));
+    
+    // var csrf_token = getCookie('fastapi-csrf-token');
+    // document.setRequestHeader("X-CSRF-Token", csrf_token);
+    // request.setRequestHeader();
+    // var meta = document.createElement('meta');
+    // meta.name = 'X-CSRF-Token';
+    // meta.content = csrf_token;
+    // document.head.append(meta);
+    // console.log(document.head);
+
+// fetch('http://localhost:8001/get_csrf_token', {
+//     method: 'POST',
+//     mode: "no-cors",
+//     credentials: "include",
+//     headers: {
+//         'Accept': 'application/json',
+//         'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ "shops_list": "aaa" })
+// }).then(response => {
+//   // Inspect the headers in the response
+//   console.log(document.cookie);
+//   response.headers.forEach(console.log);
+//   // OR you can do this
+//   for(let entry of response.headers.entries()) {
+//     console.log(entry);
+//   }
+// })
+// .catch(err => console.error(err));
+//    .then(response => response)
+//    .then(response => console.log(response.headers))
+   
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+{
+  "breakfast": {
+    "main": [
+      {
+        "name": "яйца",
+        "portion": 3
+      },
+      {
+        "name": "каша",
+        "portion": 250
+      },
+      {
+        "name": "мюсли",
+        "portion": 250
+      },
+      {
+        "name": "хлопья",
+        "portion": 250
+      }
+    ],
+    "drink": [
+      {
+        "name": "молоко",
+        "portion": 250
+      },
+      {
+        "name": "кофе",
+        "portion": 250
+      },
+      {
+        "name": "кефир",
+        "portion": 250
+      },
+      {
+        "name": "ряженка",
+        "portion": 250
+      },
+      {
+        "name": "йогурт",
+        "portion": 250
+      },
+      {
+        "name": "чай",
+        "portion": 250
+      },
+      {
+        "name": "какао",
+        "portion": 250
+      },
+      {
+        "name": "коктейль молочный",
+        "portion": 250
+      }
+    ]
+  },
+  "dinch": {
+    "main": [
+      {
+        "name": "рассольник",
+        "portion": 250
+      },
+      {
+        "name": "борщ",
+        "portion": 250
+      },
+      {
+        "name": "уха",
+        "portion": 250
+      },
+      {
+        "name": "купаты",
+        "portion": 250
+      },
+      {
+        "name": "колбас",
+        "portion": 250
+      },
+      {
+        "name": "стейк",
+        "portion": 250
+      },
+      {
+        "name": "лапша быстрого приготовления",
+        "portion": 250
+      },
+      {
+        "name": "пельмени",
+        "portion": 300
+      },
+      {
+        "name": "карбонара",
+        "portion": 250
+      },
+      {
+        "name": "яйца",
+        "portion": 3
+      },
+      {
+        "name": "бульмени",
+        "portion": 250
+      },
+      {
+        "name": "наггетсы",
+        "portion": 250
+      },
+      {
+        "name": "студень",
+        "portion": 300
+      },
+      {
+        "name": "рагу",
+        "portion": 250
+      },
+      {
+        "name": "шашлык",
+        "portion": 250
+      },
+      {
+        "name": "сотэ",
+        "portion": 250
+      },
+      {
+        "name": "вареники",
+        "portion": 250
+      },
+      {
+        "name": "плов",
+        "portion": 250
+      },
+      {
+        "name": "гуляш",
+        "portion": 300
+      }, 
+      {
+        "name": "доширак",
+        "portion": 40
+      },
+      {
+        "name": "Big Bon",
+        "portion": 75
+      }
+    ],
+    "drink": [
+      {
+        "name": "молоко",
+        "portion": 250
+      },
+      {
+        "name": "кофе",
+        "portion": 250
+      },
+      {
+        "name": "кефир",
+        "portion": 250
+      },
+      {
+        "name": "ряженка",
+        "portion": 250
+      },
+      {
+        "name": "йогурт",
+        "portion": 250
+      },
+      {
+        "name": "чай",
+        "portion": 250
+      },
+      {
+        "name": "какао",
+        "portion": 250
+      },
+      {
+        "name": "коктейль молочный",
+        "portion": 250
+      }
+    ],
+    "meat": [
+      {
+        "name": "купаты",
+        "portion": 250
+      },
+      {
+        "name": "колбаски",
+        "portion": 250
+      },
+      {
+        "name": "стейк",
+        "portion": 250
+      },
+      
+      {
+        "name": "наггетсы",
+        "portion": 250
+      },
+      {
+        "name": "студень",
+        "portion": 300
+      },
+      {
+        "name": "килька",
+        "portion": 250
+      },
+      {
+        "name": "шашлык",
+        "portion": 250
+      },
+      {
+        "name": "сардина",
+        "portion": 250
+      },
+
+      {
+        "name": "сельдь",
+        "portion": 250
+      }
+    ],
+    "garnish": [
+      {
+        "name": "фасоль",
+        "portion": 250
+      },
+      {
+        "name": "макаронные",
+        "portion": 250
+      },
+      {
+        "name": "булгур",
+        "portion": 250
+      },
+      {
+        "name": "чечевица",
+        "portion": 300
+      },
+      {
+        "name": "рис",
+        "portion": 250
+      },
+      {
+        "name": "пшено",
+        "portion": 250
+      },
+      {
+        "name": "картофель",
+        "portion": 300
+      },
+      {
+        "name": "нут",
+        "portion": 250
+      }
+    ]
+  },
+  "fruits": [
+    {
+      "name": "яблоко",
+      "portion": 100
+    },
+    {
+      "name": "груша",
+      "portion": 100
+    },
+    {
+      "name": "нектарин",
+      "portion": 100
+    },
+    {
+      "name": "слива",
+      "portion": 100
+    },
+    {
+      "name": "киви",
+      "portion": 50
+    },
+    {
+      "name": "виноград",
+      "portion": 250
+    },
+    {
+      "name": "персик",
+      "portion": 100
+    },
+    {
+      "name": "банан",
+      "portion": 150
+    }
+  ],
+  "vegetables": [
+    {
+      "name": "томат",
+      "portion": 100
+    },
+    {
+      "name": "помидор",
+      "portion": 100
+    },
+    {
+      "name": "огурец",
+      "portion": 200
+    },
+    {
+      "name": "перец болгарский",
+      "portion": 100
+    },
+    {
+      "name": "кабачок",
+      "portion": 400
+    },
+    {
+      "name": "баклажан",
+      "portion": 400
+    },
+    {
+      "name": "лук",
+      "portion": 2
+    },
+    {
+      "name": "батат",
+      "portion": 300
+    }
+  ],
+  "snacks": [
+    {
+      "name": "чипсы",
+      "portion": 250
+    },
+    {
+      "name": "вафли",
+      "portion": 250
+    },
+    {
+      "name": "арахис",
+      "portion": 250
+    },
+    {
+      "name": "кекс",
+      "portion": 300
+    },
+    {
+      "name": "конфеты",
+      "portion": 250
+    },
+    {
+      "name": "мармелад",
+      "portion": 250
+    },
+    {
+      "name": "суфле",
+      "portion": 300
+    },
+    {
+      "name": "драже",
+      "portion": 250
+    }
+  ]
+}

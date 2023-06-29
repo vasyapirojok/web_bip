@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Dynamic Pagination</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			margin: 50px;
+		}
+
+		main {
+			widows: 70%;
+			height: auto;
+			padding: 20px;
+			margin: 50px auto;
+			background: whitesmoke;
+			font-family: system-ui;
+			color: #666;
+		}
+
+		.header {
+			width: 90%;
+			height: 100px;
+			margin: auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.items-controller,
+		.search {
+			flex-shrink: 0;
+			display: flex;
+			align-content: center;
+			align-items: center;
+
+		}
+
+		select {
+			padding: 2px;
+			margin: 0 10px;
+			outline: none;
+			cursor: pointer;
+			border: none;
+			background: transparent;
+		}
+
+		.search>input {
+			padding: 8px;
+			border: none;
+			outline: navajowhite;
+			margin: 0 0 0 20px;
+			background: white;
+		}
+
+		.field {
+			width: 90%;
+			height: auto;
+			margin: auto;
+		}
+
+		table {
+			width: 100%;
+			margin: 2px auto;
+			table-layout: auto;
+			color: #757575;
+			background-color: #ffff;
+			border-collapse: collapse;
+			border-spacing: 0;
+			text-align: left;
+		}
+
+		table tr th,
+		td {
+			padding: 10px;
+			border: 1px solid #ccc;
+		}
+
+		.bottom-field {
+			width: 100%;
+			padding: 20px;
+			margin-top: 20px;
+		}
+
+		.pagination {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.pagination li {
+			list-style: none;
+			padding: 2px;
+			margin: 10px;
+			flex-shrink: 0;
+			text-align: center;
+			border-radius: 5px;
+			border: 1px solid #999;
+			color: #999;
+		}
+
+		.pagination li.active {
+			background: #32d6aa;
+			color: white;
+			border-color: #32d6aa;
+
+		}
+
+		.pagination li a {
+			text-decoration: none;
+			padding: 3px 8px;
+			color: inherit;
+			display: block;
+			font-family: sans-serif;
+			font-size: 13px;
+		}
+
+		i.fa-edit {
+			color: lime;
+		}
+
+		i.fa-trash {
+			color: red;
+		}
+	</style>
+</head>
+
+<body onload="script();">
+
+	<main>
+		<section class="header">
+			<div class="items-controller">
+
+				<span name="" id="itemperpage" hidden="hidden" , value="10">
+				</span>
+			</div>
+			<div class="search">
+				<h5>Search</h5>
+				<input type="text" name="" id="search" placeholder="search">
+			</div>
+		</section>
+		<section class="field">
+			<table border=1>
+				<thead>
+					<tr>
+						<th>Product</th>
+						<th>Photo</th>
+						<th>Price without discount</th>
+						<th>Discounted price</th>
+						<th>Weigth</th>
+						<th>Discount</th>
+						<th>Date of production</th>
+						<th>Expiration date</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr>
+						<td>Вода минеральная Нарзан, 1 л</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/d42b3068172b127a1a7cc0d1c0c4ee3f/orig>
+						</td>
+						<td>78.0</td>
+						<td>65.0</td>
+						<td>1.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Шоколадный шар Chupa Chups с игрушкой внутри 20 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/cf22ea4cad8065082e04a35346c68a0f/orig>
+						</td>
+						<td>110.0</td>
+						<td>95.0</td>
+						<td>18.0</td>
+						<td>14.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Драже Skittles Кисломикс в разноцветной глазури 70 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/263dff3c95312d033a1c8a4320dc84af/orig>
+						</td>
+						<td>105.0</td>
+						<td>88.0</td>
+						<td>70.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Шоколад молочный Schogetten Trilogia Белый шоколад с джандуей грильяжем и фундуком 100 г
+						</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/7699fc23d9e2dd6fab487bdb27c48366/orig>
+						</td>
+						<td>169.0</td>
+						<td>125.0</td>
+						<td>100.0</td>
+						<td>27.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Фарш из филе ЦБ Троекурово Филейный 450 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/06f1dba6f3d8cd02e6c274656aa7bf17/orig>
+						</td>
+						<td>149.0</td>
+						<td>129.0</td>
+						<td>450.0</td>
+						<td>14.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Драже Skittles Фрукты в разноцветной глазури 70 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9541617/e557d3e69c519a0d2ff571d7e89d6ea5/orig>
+						</td>
+						<td>105.0</td>
+						<td>88.0</td>
+						<td>70.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Шоколад молочный Schogetten Caramel Brownie с кремом брауни печенья с какао и карамелью 100
+							г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/890d7082c2d06a95b42faa9a9ecf1f26/orig>
+						</td>
+						<td>169.0</td>
+						<td>125.0</td>
+						<td>100.0</td>
+						<td>27.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Чипсы картофельные Lay`s Краб 81 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/8180325/7c36ad36e9784f71f26dead6313e75ae/orig>
+						</td>
+						<td>85.0</td>
+						<td>79.0</td>
+						<td>81.0</td>
+						<td>8.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Оливки Filippo Berio фаршированные лимоном 300 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/386304e56ad606b707a454d1391ded36/orig>
+						</td>
+						<td>175.0</td>
+						<td>155.0</td>
+						<td>300.0</td>
+						<td>12.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Овсяное печенье Хлебный спас с кунжутом и имбирем 200 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/8180325/76745d324a1d1238eaf49a7ae4ebdaf4/orig>
+						</td>
+						<td>99.0</td>
+						<td>89.0</td>
+						<td>200.0</td>
+						<td>11.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Биойогурт Слобода с малиной 2,0% 260 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/10cdd6e98ddddf6173ec1560959faa9d/orig>
+						</td>
+						<td>66.0</td>
+						<td>55.0</td>
+						<td>260.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-02T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Шоколад молочный Schogetten Alpine Milk Chokolate with Hazelnuts с обжаренным фундуком 100 г
+						</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9041692/c6e5a6719e55b5a107ff0fca7e389451/orig>
+						</td>
+						<td>169.0</td>
+						<td>125.0</td>
+						<td>100.0</td>
+						<td>27.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Конфеты жевательные Fruittella Радуга 70 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/94852e6f9dcbb0f0205a77158c4b10b0/orig>
+						</td>
+						<td>110.0</td>
+						<td>99.0</td>
+						<td>70.0</td>
+						<td>10.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Крупа манная Макфа 700 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/e5eadfe0ef4fb5c524d989075931603b/orig>
+						</td>
+						<td>109.0</td>
+						<td>89.0</td>
+						<td>700.0</td>
+						<td>19.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Макаронные изделия Barilla Фузилли спирали без глютена 400 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/2da9402222261e07abd7bb896da43bc6/orig>
+						</td>
+						<td>299.0</td>
+						<td>249.0</td>
+						<td>400.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Пряники заварные Здоровые традиции Ржаные 340 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/4ff7220bb8c043cb188b21ba9bd8fdb9/orig>
+						</td>
+						<td>99.0</td>
+						<td>89.0</td>
+						<td>340.0</td>
+						<td>11.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Макаронные изделия Barilla Феттуччине гнезда 500 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9541617/a38917ccca89ee3d003e1d625915a961/orig>
+						</td>
+						<td>329.0</td>
+						<td>269.0</td>
+						<td>500.0</td>
+						<td>19.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Напиток соево-банановый Alpro обогащенный кальцием 1 л</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/8180325/dcf8fc1f8b981f5782362b0e266478cd/orig>
+						</td>
+						<td>269.0</td>
+						<td>255.0</td>
+						<td>1000.0</td>
+						<td>6.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Печенье сдобное Наслада Курабье 260 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/2dd7816c3ac471b8e204b576c7731e53/orig>
+						</td>
+						<td>155.0</td>
+						<td>125.0</td>
+						<td>260.0</td>
+						<td>20.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Сахар Tahir белый кристаллический 500 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/fef1a2a8ec2be535f1c689ec74dcd38b/orig>
+						</td>
+						<td>85.0</td>
+						<td>75.0</td>
+						<td>500.0</td>
+						<td>12.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Горох колотый Ярмарка 700 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/b29a703b63a48db1ca31e1a288352052/orig>
+						</td>
+						<td>92.0</td>
+						<td>78.0</td>
+						<td>700.0</td>
+						<td>16.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Леденцы без сахара Sula Гранат 60 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/05f108174a5e82f9a70ca582355a643b/orig>
+						</td>
+						<td>115.0</td>
+						<td>104.0</td>
+						<td>60.0</td>
+						<td>10.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Кофе молотый Costa Coffee Сolombian Roast средняя обжарка 200 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/658ce028b9edabf9a5b1d462db484316/orig>
+						</td>
+						<td>499.0</td>
+						<td>439.0</td>
+						<td>200.0</td>
+						<td>13.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Скумбрия атлантич. соленая кусочки, 300 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/6200889b33addd0965f45ae66b3b02d0/orig>
+						</td>
+						<td>248.0</td>
+						<td>223.0</td>
+						<td>300.0</td>
+						<td>11.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Чипсы картофельные Lay`s Натуральный 81 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/b930ee55b8490ab3469cf6738770993e/orig>
+						</td>
+						<td>85.0</td>
+						<td>79.0</td>
+						<td>81.0</td>
+						<td>8.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Сосиски Папа может Сочные п/о 600 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/d4fbb8815677ad0bbed09631f57cfb5e/orig>
+						</td>
+						<td>299.0</td>
+						<td>249.0</td>
+						<td>600.0</td>
+						<td>17.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Ирис Meller Соленая карамель 38 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/a0181cb2002573cfee2cc74082d76f1c/orig>
+						</td>
+						<td>65.0</td>
+						<td>55.0</td>
+						<td>38.0</td>
+						<td>16.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Набор для глинтвейна ГлинтМейстер Красная жара 40 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/be4a27706218f9957163d096fae83865/orig>
+						</td>
+						<td>103.0</td>
+						<td>79.0</td>
+						<td>40.0</td>
+						<td>24.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Макаронные изделия Шебекинские №111 Вермишелька 450 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/7fa15532653dea6feedc565b8ec74cb1/orig>
+						</td>
+						<td>79.0</td>
+						<td>65.0</td>
+						<td>450.0</td>
+						<td>18.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Десерт слоеный Полет Лимоньерки Лимон 300 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/003485d29a84320ab5d034d7c703889c/orig>
+						</td>
+						<td>159.0</td>
+						<td>129.0</td>
+						<td>300.0</td>
+						<td>19.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Булгур Bravolli 350 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/2e0fffc0af7cee53851d6be372db768b/orig>
+						</td>
+						<td>159.0</td>
+						<td>129.0</td>
+						<td>350.0</td>
+						<td>19.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Варенье KERAKUR из инжира red 610 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/8994f21c43e44bf0f8e1a6444378bb2b/orig>
+						</td>
+						<td>330.0</td>
+						<td>265.0</td>
+						<td>610.0</td>
+						<td>20.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Леденцы без сахара Sula Мультивитамин 60 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/1d6052efc84eeda2f5707c17ea5f8fcc/orig>
+						</td>
+						<td>115.0</td>
+						<td>105.0</td>
+						<td>60.0</td>
+						<td>9.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Макаронные изделия Макфа Вермишель томатная длинная 500 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/a922bfe735583fecd26f3c53702a0d05/orig>
+						</td>
+						<td>93.0</td>
+						<td>79.0</td>
+						<td>500.0</td>
+						<td>16.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Фисташки От Мартина неочищенные с солью обжаренные 100 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9714661/013dd3837c58410d1c07b0e00a2d9ae3/orig>
+						</td>
+						<td>345.0</td>
+						<td>295.0</td>
+						<td>100.0</td>
+						<td>15.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Паштет Добринское ФХ из говяжьей печени 100 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9041692/fd67389fcf8166bddac754f4fd47ac1f/orig>
+						</td>
+						<td>135.0</td>
+						<td>99.0</td>
+						<td>100.0</td>
+						<td>27.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-30T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Молоко 3,2%, 1 л</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/21d49c1fed122ef895c4f71fd9d0a36b/orig>
+						</td>
+						<td>77.0</td>
+						<td>70.0</td>
+						<td>1000.0</td>
+						<td>10.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-26T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Геркулес Русский продукт Ассорти клубника абрикос вишня 210 г</td>
+						<td><img
+								src=https://leonardo.edadeal.io/dyn/cr/get-edadeal/9369039/58c3f00d494e3b9ab2aa9a46ce2e4c62/orig>
+						</td>
+						<td>139.0</td>
+						<td>119.0</td>
+						<td>210.0</td>
+						<td>15.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-07-14T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Кекс `Столичный` 250г, Дарница</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/iyudl2brhobrd7fml7lymwp7l4.jpg>
+						</td>
+						<td>149.99</td>
+						<td>69.99</td>
+						<td>250.0</td>
+						<td>54.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Сосиски `Копченые` По-черкизовски 400г, Черкизово</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/wxjix4bibffpk2cyc5kix23ogq.jpg>
+						</td>
+						<td>129.99</td>
+						<td>129.99</td>
+						<td>400.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Хлеб `Двинский` заварной нарез. 350г, Аладушкин</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/5flyrxvtvxxq3ipibd62q7bkki.jpg>
+						</td>
+						<td>79.99</td>
+						<td>44.99</td>
+						<td>350.0</td>
+						<td>44.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Хлеб `Гамбург` зерновой на закваске нарез. 400г, Аладушкин</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/cvseykmnostq7fuew3ddysruge.jpg>
+						</td>
+						<td>74.99</td>
+						<td>49.99</td>
+						<td>400.0</td>
+						<td>34.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Хлеб `Кельн` многозерновой нарез. 400г, Аладушкин</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/7rxepkpkushx6fa5bedzzli4lm.jpg>
+						</td>
+						<td>74.99</td>
+						<td>49.99</td>
+						<td>400.0</td>
+						<td>34.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Пельмени `Цезарь Фамили` фирменные 700г</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/xzy6onvykqo445k5ny5nmjeusi.jpg>
+						</td>
+						<td>139.99</td>
+						<td>139.99</td>
+						<td>700.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Пельмени `Сибирская коллекция` 3 вида мяса со слив.маслом 700г</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/ezicmhmpfbajv6ziff7hd25va4.jpg>
+						</td>
+						<td>169.99</td>
+						<td>169.99</td>
+						<td>700.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Молоко `Северная Долина` у/паст 2,5% т/п 950г БЗМЖ</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/mbfoxdre5a3ey7itjjy247yfya.jpg>
+						</td>
+						<td>54.99</td>
+						<td>54.99</td>
+						<td>950.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Хлеб `Честный состав` пшенич. подовый нарезанный 400г, Аладушкин</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/zzt5z5mw65rf5uvjfgjxt5xm6e.jpg>
+						</td>
+						<td>54.99</td>
+						<td>39.99</td>
+						<td>400.0</td>
+						<td>28.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Кефир `Славянские Традиции` 1,5% пэт 0,9кг БЗМЖ</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/cik5mg2crrowb74ayrtwp6iqee.jpg>
+						</td>
+						<td>49.99</td>
+						<td>49.99</td>
+						<td>0.0009</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Масло подсолнечное Слобода` раф. дезод.в/с 0,8л</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/fflgd6gxpummab6xqor4mjkyfq.jpg>
+						</td>
+						<td>79.99</td>
+						<td>79.99</td>
+						<td>800.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Баба ромовая с изюмом и тёмной глазурью 80г*2шт, Аладушкин</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/qaozxdhsnknhze7nrfnrxsvgge.jpg>
+						</td>
+						<td>89.99</td>
+						<td>39.99</td>
+						<td>2.0</td>
+						<td>56.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Хлопья овсяные `Увелка` геркулес 15 минут 500г</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/rmgcdcs5g64dksvf33fgj3fmh4.jpg>
+						</td>
+						<td>39.99</td>
+						<td>39.99</td>
+						<td>500.0</td>
+						<td>0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+					<tr>
+						<td>Сосиски `Куриные` газ/ср 500г, ВНМД</td>
+						<td><img src=https://leonardo.edadeal.io/dyn/cr/catalyst/offers/xtifr5gbr6t65l7igeqeor6b6i.jpg>
+						</td>
+						<td>149.99</td>
+						<td>109.99</td>
+						<td>500.0</td>
+						<td>27.0</td>
+						<td>2023-06-19T00:00:00Z</td>
+						<td>2023-06-25T00:00:00Z</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<div class="bottom-field">
+				<ul class="pagination">
+					<li class="prev"><a href="#" id="prev">&#139;</a></li>
+					<!-- page number here -->
+					<li class="next"><a href="#" id="next">&#155;</a></li>
+				</ul>
+			</div>
+		</section>
+	</main>
+
+
+
+
+	<script type="text/javascript">
+		var tbody = document.querySelector("tbody");
+		var pageUl = document.querySelector(".pagination");
+		var itemShow = document.querySelector("#itemperpage");
+		var tr = tbody.querySelectorAll("tr");
+		var emptyBox = [];
+		var index = 1;
+		var itemPerPage = 10;
+		// TODO get 1st page
+		// window.location.href = "https://127.0.0.1/get_page" + "?page_number=" + index + "&shops_list=['5ka']";
+		for (let i = 0; i < tr.length; i++) { emptyBox.push(tr[i]); }
+		
+		
+		itemShow.onchange = giveTrPerPage;
+		function giveTrPerPage() {
+			itemPerPage = Number(this.value);
+			// console.log(itemPerPage);
+			displayPage(itemPerPage);
+			pageGenerator(itemPerPage);
+			getpagElement(itemPerPage);
+		}
+		// INIT STEP
+		function displayPage(limit) {
+			
+			tbody.innerHTML = '';
+			for (let i = 0; i < limit; i++) {
+				tbody.appendChild(emptyBox[i]);
+			}
+			
+			const pageNum = pageUl.querySelectorAll('.list');
+			pageNum.forEach(n => n.remove());
+		}
+		
+		displayPage(itemPerPage);
+		
+		function clear_pages() {
+			pages = document.querySelectorAll("li")
+			if (pages.length > 2) {
+				for (let i = 1; i < pages.length - 1; ++i) {
+					pages[i].remove()
+				}
+			}
+		}
+
+		function pageGenerator(getem) {
+			const num_of_tr = emptyBox.length;
+			if (num_of_tr <= getem) {
+				pageUl.style.display = 'none';
+			} else {
+
+				pageUl.style.display = 'flex';
+				const num_Of_Page = Math.ceil(num_of_tr / getem);
+				clear_pages()
+				// i = 0 
+				for (i = index; (i <= parseInt(index) + 5) && (i < num_Of_Page); i++) {
+					
+					const li = document.createElement('li'); li.className = 'list';
+					
+					if (i == index) {
+						li.classList.add("active");
+					}
+
+					const a = document.createElement('a'); a.href = '#'; a.innerText = i;
+					a.setAttribute('data-page', i);
+					li.appendChild(a);
+					let next_elem = pageUl.querySelector('.next');
+					// console.log();
+					pageUl.insertBefore(li, next_elem);
+				}
+			}
+		}
+		pageGenerator(itemPerPage);
+		// console.log("after pagegen");
+		// console.log(tbody.innerHTML);
+		let pageLink = pageUl.querySelectorAll("a");
+		let lastPage = pageLink.length - 2;
+
+		function pageRunner(page, items, lastPage, active) {
+			
+			for (button of page) {
+				button.onclick = e => {
+					const page_num = e.target.getAttribute('data-page');
+					const page_mover = e.target.getAttribute('id');
+					if (page_num != null) {
+						index = page_num;
+					} else {
+						if (page_mover === "next") {
+							index++;
+							if (index >= lastPage) {
+								index = lastPage;
+							}
+						} else {
+							index--;
+							if (index <= 1) {
+								index = 1;
+							}
+						}
+
+					}
+					pageGenerator(itemPerPage);
+					let pageLink_ = pageUl.querySelectorAll("a");
+					let lastPage_ = pageLink_.length - 2;
+					
+					pageLi_ = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+					// console.log(pageLi_);
+					pageRunner(pageLink_, itemPerPage, lastPage_, pageLi_);
+					
+					pageMaker(index, items, active);
+					// displayPage(10);
+				}
+			}
+
+		}
+		var pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+		pageRunner(pageLink, itemPerPage, lastPage, pageLi);
+		// console.log("after runner");
+		// console.log(tbody.innerHTML);
+		function getpagElement(val) {
+			
+			let pagelink = pageUl.querySelectorAll("a");
+			let lastpage = pagelink.length - 2;
+			let pageli = pageUl.querySelectorAll('.list');
+			pageli[0].classList.add("active");
+			pageRunner(pagelink, val, lastpage, pageli);
+
+		}
+
+
+		// OTHER STEPS
+		function pageMaker(index, item_per_page, activePage) {
+			
+			const start = item_per_page * index;
+			const end = start + item_per_page;
+
+			const current_page = emptyBox.slice((start - item_per_page), (end - item_per_page));
+			
+			tbody.innerHTML = "";
+			for (let j = 0; j < current_page.length; j++) {
+				let item = current_page[j];
+				tbody.appendChild(item);
+			}
+
+		}
+
+
+
+
+
+		// search content 
+		var search = document.getElementById("search");
+		search.onkeyup = e => {
+			const text = e.target.value;
+			for (let i = 0; i < tr.length; i++) {
+				const matchText = tr[i].querySelectorAll("td")[0].innerText;
+				if (matchText.toLowerCase().indexOf(text.toLowerCase()) > -1) {
+					tr[i].style.visibility = "visible";
+				} else {
+					tr[i].style.visibility = "collapse";
+				}
+			}
+		}
+	</script>
+</body>
+
+</html>

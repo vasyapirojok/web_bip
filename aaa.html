@@ -1,0 +1,46 @@
+<html>
+<body>
+
+<h2 style="color:green"> Get all marked checkboxes value </h2>
+<h4> Select the programming language, you know </h4>
+<tr>
+<td> Java: <input type="checkbox" id="check1" name="pl" value="Java"> </td>
+<td> PHP: <input type="checkbox" id="check2" name="pl" value="PHP"> </td> 
+</tr> <tr>
+<td> Angular: <input type="checkbox" id="check3" name="pl" value="Angular"> </td>
+<td> CSS: <input type="checkbox" id="check4" name="pl" value="CSS"> </td>
+</tr> <tr>
+<td> Python: <input type="checkbox" id="check5" name="pl" value="Python"> </td>
+<td> Android: <input type="checkbox" id="check6" name="pl" value="Android"> </td> <br> <br>
+<button id="btn">Submit</button> <br>
+<h4 style="color:green" id="result"></h4>  
+
+<script>
+document.getElementById('btn').onclick = function() {
+  var selected_checkbox = document.getElementsByName('pl');
+  var ret_str = "";
+  for (var checkbox of selected_checkbox) {
+    if (checkbox.checked) {
+      document.body.append(checkbox.value + ' ');
+      ret_str = ret_str + checkbox.value + " ";
+    }
+  }
+  fetch('http://localhost:8001/get_ration', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ "shops_list": ret_str })
+})
+   .then(response => response.json())
+   .then(response => console.log(JSON.stringify(response)))
+  return ret_str;
+
+}
+</script>
+
+</body>
+</html>
+
+ 
