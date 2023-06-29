@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.bip.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_code_fragment"
+            app:destination="@id/CodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.example.bip.SecondFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SecondFragment_to_code_fragment"
+            app:destination="@id/CodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/CodeFragment"
+        android:name="com.example.bip.code"
+        android:label="@string/code"
+        tools:layout="@layout/fragment_code">
+
+        <action
+            android:id="@+id/action_CodeFragment_to_ChoiceFragment"
+            app:destination="@id/ChoiceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ChoiceFragment"
+        android:name="com.example.bip.ChoiceFragment"
+        android:label="@string/ch_shop"
+        tools:layout="@layout/fragment_choice">
+
+        <!--        <action-->
+        <!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
+        <!--            app:destination="@id/FirstFragment" />-->
+    </fragment>
+</navigation>
